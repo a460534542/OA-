@@ -1,0 +1,126 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="${rc.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${rc.contextPath}/css/animate.min.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
+		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#btnSubmit').click(function(){
+					$('#affairModuleId').val(${affairModuleId});
+					$('#html').val($('#formAffair1').html());
+					 $('#formAffair2').submit();
+				});
+			
+					
+			});
+		
+		</script>
+	</head>
+	<body>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button onclick="history.back();" type="button" class="btn btn-default btn-back btn-sm"> 返 回 </button>&nbsp;&nbsp;创建新公文
+				</div>
+				
+				<div class="panel-body">
+						<div style="display:none;"><form action="${rc.contextPath}/affair/doAdd" method="post" id="formAffair2">
+								<input id="affairModuleId" name="affairModuleId" type="text"/>
+								<input id="html" name="html" type="text"/>
+						</form></div> 
+					<!-- 新增公文 -->
+					<form action="${rc.contextPath}/affair/doAdd" method="post" id="formAffair1" class="form-horizontal" role="form">
+					
+					  <#list moduleOptions as moduleOption>
+						  <div class="form-group">
+						  
+						    <#if moduleOption.optionId=1>	<!-- 单行文本框 -->
+							    <label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control"  placeholder="请输入名字">
+							    </div>
+							    
+						    <#elseif moduleOption.optionId=2> <!-- 多行文本框 -->
+						    	<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+						    	<div class="col-sm-10">
+						    		<textarea class="form-control col-sm-10"></textarea>
+						    	</div>
+						    	
+					    	<#elseif moduleOption.optionId=3> <!-- 多选框 -->
+					    		<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+					    		<div class="col-sm-10">
+					    			<!-- 遍历选项 -->
+					    			<#list moduleOption.optionData?split("，") as data>
+								    <label class="checkbox-inline">
+								        <input type="checkbox"  value=""> ${data}
+								    </label>
+								    </#list>
+							    </div>
+								
+					    	<#elseif moduleOption.optionId=4> <!-- 单选 -->
+					    		<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+						    	<div class="col-sm-10">		
+						    		<#list moduleOption.optionData?split("，") as data>						   
+								    <label class="radio-inline">
+								        <input type="radio"  value="" checked> ${data}
+								    </label>
+								    </#list>
+								</div>
+						    
+						    <#elseif moduleOption.optionId=5> <!-- 下拉菜单 -->
+							    <label class="col-md-2 control-label" for="">${moduleOption.optionName}</label>
+							    <div class="col-md-10">
+							    	 <select class="form-control">
+								      <#list moduleOption.optionData?split("，") as data>
+								      	<option>${data}</option>
+								      </#list>
+								    </select>	
+							    </div>
+							   
+						    	
+					    	<#elseif moduleOption.optionId=6> <!-- 日期 -->
+						    	<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+							    <div class="col-sm-10">
+							      <input type="date" class="form-control" placeholder="请输入名字">
+							    </div>
+						    	
+					    	<#elseif moduleOption.optionId=7> <!-- 时间 -->
+						    	<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+							    <div class="col-sm-10">
+							      <input type="time" class="form-control"  placeholder="请输入名字">
+							    </div>
+						    	
+					    	<#elseif moduleOption.optionId=8> <!-- 日期时间 -->
+					    		<label for="" class="col-sm-2 control-label">${moduleOption.optionName}</label>
+							    <div class="col-sm-10">
+							      <input type="datetime-local" class="form-control" placeholder="请输入名字">
+							    </div>
+							    
+						    </#if>
+						  </div>
+					  </#list>
+					  
+					  <div class="form-group">
+					  	<div class="col-md-offset-2 col-md-10">
+					  		<input id="btnSubmit" type="button" class="btn btn-danger" value="确认提交"/>
+					  	</div>
+					  </div>
+					
+					</form>
+
+				</div>
+			</div>
+			
+
+		<div style="height: 80px;"></div>
+	</body>
+</html>
+

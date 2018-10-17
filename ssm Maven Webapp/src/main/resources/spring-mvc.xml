@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:tx="http://www.springframework.org/schema/tx" 
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans 
+       http://www.springframework.org/schema/beans/spring-beans-4.2.xsd 
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-4.1.xsd 
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd"
+       >
+
+    <!-- 配置反射自动扫描的包 -->
+    <context:component-scan base-package="com.bwf.*" />
+    
+    <!-- 注册HandlerMapper、HandlerAdapter两个映射类 映射类和方法 -->
+    <mvc:annotation-driven />
+    
+    <!-- 访问静态资源时，让请求通过  -->
+    <mvc:default-servlet-handler />
+    
+  
+    <!-- 注册拦截器 -->
+    <mvc:interceptors>
+    	
+    
+    	<!-- 登录拦截器,未登录用户访问页面，直接跳转到登录页 -->
+    	<mvc:interceptor>
+    		
+    		<!-- 拦截哪些路径中的请求 -->
+    		<mvc:mapping path="/*"/>
+    		<mvc:mapping path="/*/*"/>
+    		
+    		<!-- 不拦截的请求 -->
+    		<mvc:exclude-mapping path="/user/login"/>
+    		<mvc:exclude-mapping path="/user/doLogin"/>
+    		<mvc:exclude-mapping path="/**/fonts/*"/>
+	        <mvc:exclude-mapping path="/css/**"/>
+	        <mvc:exclude-mapping path="/js/**"/>
+	        <mvc:exclude-mapping path="/img/**"/>
+    		
+    		<!-- 定义拦截器使用的bean -->
+    		<bean class="com.bwf.interceptor.LoginInterceptor" ></bean>
+    	</mvc:interceptor>
+    	
+    	<!-- 权限拦截器 -->
+    	<mvc:interceptor>
+    		<mvc:mapping path="/*"/>
+    		<mvc:mapping path="/*/*"/>
+    		<mvc:exclude-mapping path="/user/login"/>
+    		<mvc:exclude-mapping path="/user/logout"/>    		
+    		<mvc:exclude-mapping path="/user/doLogin"/>
+    		<mvc:exclude-mapping path="/home"/>
+    		<mvc:exclude-mapping path="/error"/>
+    		<mvc:exclude-mapping path="/error/**"/>
+    		<mvc:exclude-mapping path="/index"/>
+    		<mvc:exclude-mapping path="/index/index"/>
+    		<mvc:exclude-mapping path="/**/fonts/*"/>
+	        <mvc:exclude-mapping path="/css/**"/>
+	        <mvc:exclude-mapping path="/js/**"/>
+	        <mvc:exclude-mapping path="/img/**"/>
+	        
+	        <bean class="com.bwf.interceptor.OperateInterceptor"></bean>
+    	</mvc:interceptor>
+    	
+    </mvc:interceptors>
+    
+    <mvc:resources location="/WEB-INF/resources/js/" mapping="/js/**"></mvc:resources>
+    <mvc:resources location="/WEB-INF/resources/css/" mapping="/css/**"></mvc:resources>
+    <mvc:resources location="/WEB-INF/resources/img/" mapping="/img/**"></mvc:resources> 
+    
+
+
+	
+    <!--文件上传解析器 -->
+    <bean id="multipartResolver"
+        class="org.springframework.web.multipart.support.StandardServletMultipartResolver">
+    </bean>
+	
+
+    <!-- FreeMarker视图解析器与属性配置 -->
+    <bean id="viewResolver"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <!--是否启用缓存 -->
+        <property name="cache" value="true" />
+        <!--自动添加到路径中的后缀 -->
+        <property name="suffix" value=".html" />
+        <!--指定视图渲染类 -->
+        <property name="viewClass"
+            value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
+        <!-- 设置是否暴露Spring的macro辅助类库，默认为true -->
+        <property name="exposeSpringMacroHelpers" value="true" />
+        <!-- 是否应将所有request属性添加到与模板合并之前的模型。默认为false。 -->
+        <property name="exposeRequestAttributes" value="true" />
+        <!-- 是否应将所有session属性添加到与模板合并之前的模型。默认为false。 -->
+        <property name="exposeSessionAttributes" value="true" />
+        <!-- 在页面中使用${rc.contextPath}就可获得contextPath -->
+        <property name="requestContextAttribute" value="rc" />
+        <!--设置所有视图的内容类型，如果视图本身设置内容类型视图类可以忽略 -->
+        <property name="contentType" value="text/html;charset=UTF-8" />
+        <!-- 优先级，越小越前 -->
+        <property name="order" value="1" />
+    </bean>
+
+    <!-- 配置FreeMarker细节 -->
+    <bean id="freemarkerConfig"
+        class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!-- 模板路径 -->
+        <property name="templateLoaderPath" value="/WEB-INF/view/" />
+        <property name="freemarkerSettings">
+            <props>
+                <!-- 刷新模板的周期，单位为秒 -->
+                <prop key="template_update_delay">5</prop>
+                <!--模板的编码格式 -->
+                <prop key="defaultEncoding">UTF-8</prop>
+                <!--url编码格式 -->
+                <prop key="url_escaping_charset">UTF-8</prop>
+                <!--此属性可以防止模板解析空值时的错误 -->
+                <prop key="classic_compatible">true</prop>
+                <!--该模板所使用的国际化语言环境选项-->
+                <prop key="locale">zh_CN</prop>
+                <!--布尔值格式-->
+                <prop key="boolean_format">true,false</prop>
+                <!--日期时间格式-->
+                <prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+                <!--时间格式-->
+                <prop key="time_format">HH:mm:ss</prop>
+                <!--数字格式-->
+                <prop key="number_format">0.######</prop>
+                <!--自动开启/关闭空白移除，默认为true-->
+                <prop key="whitespace_stripping">true</prop>
+            </props>
+        </property>
+    </bean>
+    
+     
+    
+</beans>

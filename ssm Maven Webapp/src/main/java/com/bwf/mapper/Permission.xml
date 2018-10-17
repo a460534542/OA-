@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.PermissionMapper">
+
+	<resultMap type="com.bwf.entity.Permission" id="permission">
+		<id column="permission_id" property="permissionId"/>
+		<result column="permission_name" property="permissionName"/>
+		<result column="permission_type" property="permissionType"/>
+		<result column="pid" property="pid"/>
+	</resultMap>
+	
+	<select id="getAllPermissions" resultMap="permission">
+		select * from permission
+	</select>
+	
+	<select id="getPermissionsByRoleId" parameterType="int" resultMap="permission">
+		select permission.* from
+		role_permission inner join permission 
+		on role_permission.permission_id = permission.permission_id
+		where role_permission.role_id = #{roleId}
+	</select>
+	
+	<delete id="deletePermissionsByRoleId" parameterType="int">
+		delete from role_permission where role_id = #{roleId}
+	</delete>
+	
+	<insert id="addPermissions">
+		insert into role_permission ( role_id , permission_id ) values
+		<foreach collection="permissionIds" item="permissionId" separator="," close=";">
+			( #{roleId} , #{permissionId} ) 
+		</foreach>
+	</insert>
+
+
+</mapper>

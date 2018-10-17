@@ -1,0 +1,108 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="${rc.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${rc.contextPath}/css/animate.min.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
+		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+		<script type="text/javascript">
+			$( function(){
+				$('#roleId').change( function(){
+					location.href = '/oa/permission/show?roleId=' + $(this).val();
+				});
+				
+				$('#quanXian div').on('click','.p1',function(){
+					$(this).parent().find("input").each(function(){	
+						$(this).prop('checked',$(this).parent().find('.p1').prop('checked'));		
+					});
+				})	
+				
+				$('#quanXian div').on('click','input',function(){
+					var a=false;
+					var b=true;
+					$(this).parent().find("input").not('.p1').each(function(){
+						if($(this).prop('checked')){
+							a=true;
+						}else{
+							b=false;
+						}					
+					});
+					if(!a){
+						$(this).parent().find(".p1").prop('checked',false);
+					}
+					if(b){
+						$(this).parent().find(".p1").prop('checked',true);
+					}
+				})
+				
+			} );
+			
+			
+			
+			
+			
+		</script>
+	</head>
+	<body>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					权限管理
+				</div>
+				<div class="panel-body">
+					<form action="${rc.contextPath}/permission/save" method="GET" role="form">
+						
+						<select id="roleId" name="roleId" class="form-control">
+							<#list allRoles as role>
+							<#if role.roleId=roleId>
+								<option selected="selected" value="${role.roleId}">${role.roleName}</option>
+							<#else>
+								<option value="${role.roleId}">${role.roleName}</option>
+							</#if>							
+							</#list>
+						</select>
+						
+						<hr/>
+						<div id="quanXian">
+						<#list allPermissions as p1>
+						<#if p1.pid=null>
+							<!-- 1级权限的div -->
+							<div class="form-control" style="height:60px;">
+								<#if currentRolePermissionIds?seq_contains(p1.permissionId)>
+									<input class="p1" name="permissionId" value="${p1.permissionId}" type="checkbox" checked="checked"/>${p1.permissionName} <br/>
+								<#else>
+									<input class="p1" name="permissionId" value="${p1.permissionId}" type="checkbox" />${p1.permissionName} <br/>
+								</#if>
+								<!-- 2级权限的div -->
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<#list allPermissions as p2>
+									<#if p2.pid=p1.permissionId>
+									<#if currentRolePermissionIds?seq_contains(p2.permissionId)>
+										<input  name="permissionId" value="${p2.permissionId}" type="checkbox" checked="checked"/>${p2.permissionName} 
+									<#else>
+										<input  name="permissionId" value="${p2.permissionId}" type="checkbox" />${p2.permissionName}
+									</#if>
+									</#if>
+								</#list>
+							</div>
+						</#if>						
+						</#list>
+						</div>
+						<hr/>
+						
+						<button type="submit" class="btn btn-danger form-control"> 提交表单 </button>
+					
+					</form>
+				</div>
+			</div>
+			
+
+		<div style="height: 80px;"></div>
+	</body>
+</html>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.AffairModuleChainMapper">
+
+	<resultMap type="com.bwf.entity.AffairModuleChain" id="affairModuleChain">
+		<id column="affair_module_chain_id" property="affairModuleChainId"/>
+		<result column="order" property="order"/>
+		<result column="approver_id" property="approverId"/>
+		<result column="affair_module_id" property="affairModuleId"/>
+	</resultMap>
+	
+	
+	<insert id="add" >
+		insert into affair_module_chain values
+		<foreach collection="chains" item="chain" separator="," close=";">
+			( null ,  #{chain.order} , #{chain.approverId} ,  #{chain.affairModuleId}  ) 
+		</foreach>
+	</insert>
+
+
+</mapper>

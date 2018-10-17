@@ -1,0 +1,188 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="${rc.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${rc.contextPath}/css/animate.min.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
+		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+		<script type="text/javascript">
+			function getData(){
+				$('#chainData').empty();
+				$('#chain').find('.chain-user').each(function(){
+					var check = '<input type="checkbox" checked="checked" name="approverId" value="'+ $(this).attr('data-user-id') +'"/>'
+					$('#chainData').append ( check );			
+				})
+			}
+		
+			
+			$( function(){
+				$('.page2').on( 'click' , '.add-option' , function(){
+					// 按钮所在的该行的 div
+					var lineDiv = $(this).parent().parent();
+					lineDiv.after ( lineDiv.clone() ); 
+				} );
+				
+				$('.page2').on( 'click' , '.delete-option' , function(){
+					if( $('.page2 .delete-option').length > 1  ) {
+						$(this).parent().parent().remove();
+					} else {
+						// 提示不能再少了
+					}
+				} );
+				
+				//增加审批链功能
+				$('.btn-user').click(function(){
+					// ui部分
+					var div = '<div style="border:1px solid #337ab7;border-radius: 3px;padding:5px;margin:5px" class="col-md-2"> '								        
+				    	+ '<img class="remove-user" style="width:24px;float:right;cursor:pointer;" src="${rc.contextPath}/img/d12.png"/>'
+				    	+ '<div style="clear:both;"></div>'
+				        + '<input data-user-id="'+ $(this).attr('data-user-id') +'" type="button" class="chain-user btn btn-primary" value="'+ $(this).html() +'"/>'
+				        + '<img style="width:24px;" src="${rc.contextPath}/img/right.png"/>'
+					    + '</div> ';
+					    
+					 $('#chain').append ( div );
+					 //整合传输数据
+					 getData();		
+				});
+				//删除审批链
+				$('#chain').on('click','.remove-user' ,function(){
+					$(this).parent().remove();
+					//整合传输数据
+					getData();		
+				})
+				
+				
+			
+			} );
+		
+		</script>
+	</head>
+	<body>
+		
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button onclick="history.back();" type="button" class="btn btn-default btn-back btn-sm"> 返 回 </button>&nbsp;&nbsp;创建新模板
+				</div>
+				<div class="panel-body">
+					
+					<form class="form-horizontal" action="${rc.contextPath}/affair_module/doAdd" method="post" role="form">
+					<div class="panel panel-default panel-step">
+						
+						<div class="panel-heading panel-step-head" style="background-color: transparent; ">
+							
+							<div class="panel-step-btn-group" >
+								<button type="button" class="btn btn-primary btn-step"> 模板名称 </button>
+								<button type="button" class="btn btn-default btn-step"> 模板选项 </button>
+								<button type="button" class="btn btn-default btn-step"> 审批流程 </button>
+								
+							</div>
+						</div>
+						
+						<div class="panel-body panel-step-body page1">
+							<div class="form-group">
+							    <label for="affairModuleName" class="col-sm-2 control-label">模板名称：</label>
+							    <div class="col-sm-10">
+							      <input type="text" class="form-control" id="affairModuleName" placeholder="请输入模板名称">
+							    </div>
+							</div>
+						</div>
+						
+						<div class="panel-body panel-step-body page2">
+						
+							<div class="form-group option">
+							
+							    <label class="col-sm-1 control-label">名称：</label>
+							    <div class="col-sm-2">
+							      <input name="optionName" type="text" class="form-control" placeholder="请输入选项名称">
+							    </div>
+							    
+							    <label class="col-sm-1 control-label">类型：</label>
+							    <div class="col-sm-2">
+							      <select name="optionId" class="form-control">
+							      	<option value="1">单行文本框</option>
+							      	<option value="2">多行文本框</option>
+							      	<option value="3">多选框</option>
+							      	<option value="4">单选按钮</option>
+							      	<option value="5">下拉菜单</option>
+							      	<option value="6">日期</option>
+							      	<option value="7">时间</option>
+							      	<option value="8">日期时间</option>
+							      </select>
+							    </div>
+							    
+							    <label class="col-sm-1 control-label">数据：</label>
+							    <div class="col-sm-2">
+							      <input name="optionData" type="text" class="form-control" placeholder="请用逗号隔开">
+							    </div>
+							    
+							    <div class="col-sm-3">
+							      <button type="button" class="add-option btn btn-success">+</button>
+							      <button type="button" class="delete-option btn btn-danger">-</button>
+							    </div>
+							</div>
+							
+							
+						</div>
+						
+						<div class="panel-body panel-step-body page3">
+							<!-- 展示所有部门 -->
+							<#list allDepartments as department>
+								<div class="row" style="border-bottom:1px dotted gray;margin-bottom:2px;padding-bottom:2px;">
+									<div class="col-md-2">
+										${department.departmentName}：
+									</div>
+									
+									<div class="col-md-10">										
+										<#list department.allUsers as user>
+											<button data-user-id="${user.userId}" type="button"  class="btn btn-xs btn-primary btn-user">${user.nickname}</button>
+										</#list>	
+									</div>
+								</div>
+							</#list>
+							<div class="row" style="border-bottom:1px dotted gray;margin-bottom:2px;padding-bottom:2px;">
+								<div class="col-md-2">
+									所在部门：
+								</div>					
+								<div class="col-md-10">				
+									<button data-user-id="-1" type="button" class="btn btn-xs btn-primary btn-user">直属上级</button>
+
+								</div>
+							</div>
+							
+							<!-- 展示审批流程部分 -->
+							<div id="chain" class="row">
+							
+							</div>
+							<div id="chainData" style="display:none;">
+								
+							</div>
+							
+							
+							
+							
+						</div>
+						
+						<div class="panel-footer panel-tab-footer">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default btn-step-prev"> 上一步 </button>
+								<button type="button" class="btn btn-default btn-step-next"> 下一步 </button>
+								<button type="submit" class="btn btn-danger btn-step-submit"> 提交表单 </button>
+							</div>
+						</div>
+						
+					</div>
+					</form>
+				</div>
+			</div>
+			
+
+		<div style="height: 80px;"></div>
+	</body>
+</html>
+

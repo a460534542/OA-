@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.UserMapper">
+
+	<resultMap type="com.bwf.entity.User" id="simpleUser">
+		<id column="user_id" property="userId"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="nickname" property="nickname"/>
+		<result column="avater" property="avater"/>
+		<association property="leader" 
+			javaType="com.bwf.entity.User" 
+			column="leader_id" 
+    		select="getUserById" ></association>
+	</resultMap>
+
+
+	<resultMap type="com.bwf.entity.User" id="nbUser">
+		<id column="user_id" property="userId"/>
+		<result column="username" property="username"/>
+		<result column="password" property="password"/>
+		<result column="nickname" property="nickname"/>
+		<result column="avater" property="avater"/>
+		
+		<collection property="menus" ofType="com.bwf.entity.Menu" resultMap="com.bwf.dao.MenuMapper.menu">
+			
+		</collection>
+		<collection property="operates" ofType="com.bwf.entity.Operate" resultMap="com.bwf.dao.OperateMapper.operate">
+			
+		</collection>
+	</resultMap>
+	
+  
+
+    <select id="getUserById" parameterType="int" resultType="com.bwf.entity.User">
+        select * from `user` where user_id = #{id}
+    </select>
+    
+    <!-- 用户登录 -->
+    <select id="getUserByUsernameAndPassword" 
+    	parameterType="com.bwf.entity.User" 
+    	resultMap="simpleUser">
+    	select * from `user` where username = #{username} and password = #{password}
+   	</select>
+   	
+   	<!-- 根据用户id获取菜单， 操作的集合 -->
+   	<select id="getMenusAndOperatesByUserId" parameterType="int" resultMap="nbUser">
+   		SELECT
+		user.* , menu.* , operate.*
+		FROM user		 
+		INNER JOIN user_role ON user_role.user_id = user.user_id
+		INNER JOIN role ON user_role.role_id = role.role_id
+		INNER JOIN role_permission ON role_permission.role_id = role.role_id
+		INNER JOIN permission ON role_permission.permission_id = permission.permission_id
+		left outer join permission_menu ON permission_menu.permission_id = permission.permission_id
+		left outer join menu ON permission_menu.menu_id = menu.menu_id
+		left outer join permission_operate on permission.permission_id = permission_operate.permission_id
+		left outer join operate on permission_operate.operate_id = operate.operate_id
+		WHERE user.user_id = #{userId}
+   	</select>
+   	
+   	<!-- 获取所有用户的数据 -->
+   	<select id="getAllUser" resultMap="simpleUser">
+   		select * from user; 
+   	</select>
+   	
+   	<!-- 查询用户总条数 -->
+   	<select id="getAllUserCount" resultType="int">
+   		select count(*) from user;
+   	</select>
+   	
+   	<!-- 查询用户通过页码 -->
+    <select id="getAllUserBypage" parameterType="int" resultMap="simpleUser">
+    	select * from user  limit #{p},#{pagesize}
+    </select>
+    
+    
+    <!-- 增加一个 user -->
+    <insert id="add" parameterType="com.bwf.entity.User" useGeneratedKeys="true" keyProperty="user_id">
+    	insert into `user` values ( null , #{username} , #{password} , #{nickname} , #{leader.userId} , #{avater}  )
+    </insert>
+    
+    <sql id="check0">set FOREIGN_KEY_CHECKS=0;</sql>
+    <sql id="check1">set FOREIGN_KEY_CHECKS=1;</sql>
+    
+    <!-- 删除 一个 user -->
+    <delete id="delete" parameterType="int">
+    	<include refid="check0"></include>
+    		delete from user where user_id = #{id};
+    	<include refid="check1"></include>
+    </delete>
+    
+    <update id="update" parameterType="com.bwf.entity.User">
+    	update `user` set 
+    		username = #{username} , 
+    		password = #{password} , 
+    		nickname = #{nickname} ,
+    		leader_id = #{leaderId} ,
+    		avater = #{avater}
+    	where user_id = #{userId}
+    </update>
+    
+   
+    
+    
+    
+    
+    
+
+</mapper>

@@ -1,0 +1,100 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>上海博为峰软件技术股份有限公司</title>
+		<link rel="stylesheet" href="${rc.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${rc.contextPath}/css/animate.min.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
+		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+		<style>
+			html {
+            background: url(${rc.contextPath}/img/bg5.jpg) no-repeat center center fixed;
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+        }
+
+		</style>
+		<script type="text/javascript">
+			$(function(){
+				if ( location.href.indexOf('error')!= -1  )  {				
+					// 有错误
+					//  获取 errorCode
+					var error = ${error};
+					var errMessage = '';
+					
+					switch ( error ) {
+						case 1:
+							errMessage = "用户名或密码错误！";
+							break;
+						default:
+							errMessage = "未知错误！";
+							break;
+					}
+					$('#errorMessage').html( errMessage );					
+					$('#openModal').trigger('click');
+				}
+			
+			});
+		
+		</script>
+	</head>
+	<body>
+		
+        		<img src="${rc.contextPath}/img/bwf_logo.png" height="50px" style="position:fixed;right:50px; top:20px;"/>	
+		
+		
+		<!--
+        	作者：titushan2010@163.com
+        	时间：2017-09-20
+        	描述：登录面板
+       -->
+		<div align="center" style="width:100%; position:fixed; top:160px; ">
+        <div align="center" style="width:400px; padding:0px; margin:0px; ">
+            <form action="${rc.contextPath}/user/doLogin" method="POST">
+                <div class="panel panel-default" style="padding:0px; margin:0px;">
+                    <div class="panel-heading">
+                        欢迎登录管理系统
+                    </div>
+                    <div class="panel-body">
+                    
+                    
+					
+                        <input type="text" name="username" class="form-control" placeholder="账户名称"/>
+                        <div style="height:10px;"></div>
+                        <input type="password" name="password" class="form-control" placeholder="账户密码" />
+
+                    </div>
+                    <div class="panel-footer">
+                        <button type="submit" class="btn btn-primary btn-sm form-control"> 登  录 </button>
+
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+	<!-- 按钮触发模态框 -->
+	<input id="openModal" type="hidden" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal" value="开始演示模态框"/>
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	                <h4 class="modal-title" id="myModalLabel">登录失败！</h4>
+	            </div>
+	            <div id="errorMessage" class="modal-body">错误信息！</div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+	            </div>
+	        </div><!-- /.modal-content -->
+	    </div><!-- /.modal -->
+	</div>
+		
+	</body>
+</html>

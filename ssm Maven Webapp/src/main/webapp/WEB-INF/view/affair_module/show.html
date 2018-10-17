@@ -1,0 +1,92 @@
+
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="/oa/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="/oa/css/animate.min.css" />
+		<script type="text/javascript" src="/oa/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="/oa/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="/oa/js/wow.js" ></script>
+		<link rel="stylesheet" href="/oa/css/global.css" />
+		<script type="text/javascript" src="/oa/js/global.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				$('#addAffairModule').click( function(){
+					location.href = "${rc.contextPath}/affair_module/add";
+				} );
+			});
+		</script>
+	</head>
+	<body>
+			
+			
+			
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					
+					公文模板设计
+					<div class="btn-group btn-group-sm pull-right">
+					
+					
+					<button type="button" class="btn btn-default" id="addAffairModule">
+						<img src="/oa/img/plus.png" height="16px"/>
+						&nbsp;&nbsp;创建公文模板
+					</button>
+					
+					</div>
+				</div>
+				
+				<div class="panel-body">
+					
+					
+						
+						<table class="table table-bordered table-condensed table-hover table-responsive cbx-group">
+							<thead>
+								<tr>
+									<th class="td-checkbox"><input type="checkbox" class="cbx-all"/></th>
+									<th>公文模板编号</th>
+									<th>公文模板名称</th>			
+									<th>操作选项</th>
+								</tr>
+							</thead>
+							<tbody>
+								<form id="form1" action="/oa/affair_module/delete" method="get">
+								<#list allAffairModules as affairModule>
+									<tr>
+										<td align="center" class="td-checkbox">
+											<input type="checkbox" name="id" value="1"/>
+										</td>
+										<td>${affairModule.affairModuleId}</td>
+										<td>${affairModule.affairModuleName}</td>
+										
+										<td width="120px">
+											<span class="btn-group btn-group-xs" >
+												<button type="button" class="btn btn-default">查看</button>
+												<button type="button" class="btn btn-default edit-user">编辑</button>
+												<input type="hidden" value="1"/>
+												<button type="button" class="btn btn-danger delete-user">删除</button>
+											</span>
+										</td>
+									</tr>
+								</#list>
+								</form>
+							</tbody>
+							<tfoot>
+								
+							</tfoot>
+						</table>
+						
+						
+					
+					
+				</div>
+			</div>
+			
+		
+		<div style="height: 80px;"></div>
+	</body>
+</html>
+

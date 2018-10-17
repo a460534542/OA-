@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.AffairMapper">
+
+	<resultMap type="com.bwf.entity.Affair" id="affair">
+		<id column="affair_id" property="affairId"/>				
+		<result column="affair_data" property="affairData"/>	
+		<result column="affair_status" property="affairStatus"/> 
+		
+ 		<association property="affairModule" javaType="com.bwf.entity.AffairModule"
+			column="affair_module_id" resultMap="com.bwf.dao.AffairModuleMapper.affairModule">
+		</association>
+		
+		<association property="proposer" javaType="com.bwf.entity.User"
+			column="proposer" resultMap="com.bwf.dao.UserMapper.simpleUser">
+		</association>
+	</resultMap>
+	
+	<insert id="add" parameterType="com.bwf.entity.Affair">
+		insert into affair values ( 
+			null , 
+			#{affairModule.affairModuleId} , 
+			#{affairData} ,
+			#{proposer.userId} ,
+			#{affairStatus}
+		)
+	</insert>
+	
+
+
+</mapper>

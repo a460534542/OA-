@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="css/bootstrap.min.css" />
+		<link rel="stylesheet" href="css/animate.min.css" />
+		<script type="text/javascript" src="js/jquery.min.js" ></script>
+		<script type="text/javascript" src="js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="js/wow.js" ></script>
+		<link rel="stylesheet" href="css/global.css" />
+		<link rel="stylesheet" href="css/index.css" />
+		<script type="text/javascript" src="js/global.js" ></script>
+	</head>
+	<body>
+		
+		<!--
+        	作者：titushan2010@163.com
+        	时间：2017-09-22
+        	描述：一级导航
+        -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+        	<div class="navbar-header">
+        		<a href="" class="navbar-brand">BWF管理系统</a>
+        		<button type="button" class="btn btn-darkgreen navbar-toggle noborder" data-toggle="collapse" data-target="#menu1">Menu</button>
+        	</div>
+        	<div>
+        		<!--
+                	作者：titushan2010@163.com
+                	时间：2017-09-22
+                	描述：搜索栏
+                -->
+        		<div class="navbar-text nav-item navbar-left hidden-md hidden-sm hidden-xs" style=" width: 200px;">
+        			<form>
+        				<div class="input-group input-group-sm">
+        					<input type="text" class="form-control hand"  placeholder="直接选择或搜索选择"/>
+        					<div class="input-group-btn">
+        						<button type="submit" class="btn btn-darkgreen"> 搜 索 </button>
+        					</div>
+        				</div>
+        			</form>
+        		</div>
+        		
+        		<!--
+                	作者：titushan2010@163.com
+                	时间：2017-09-22
+                	描述：天气
+                -->
+        		<div class="navbar-text nav-item navbar-left hidden-md hidden-sm hidden-xs" style="margin-top: 15px;">
+        			上海&nbsp;&nbsp;&nbsp;&nbsp;<img src="img/1.gif" class="" />&nbsp;&nbsp;&nbsp;&nbsp;24°
+        		</div>
+        		
+        	</div>
+        	
+        	<!--
+            	作者：titushan2010@163.com
+            	时间：2017-09-22
+            	描述：导航菜单
+            -->
+            <div class="collapse navbar-collapse" id="menu1">
+            	<ul class="nav navbar-nav navbar-right" style="margin-right: 20px;">
+            		<li><a href="javascript:void(0)" class="nav-menu-item"><img src="img/icon.png" height="20px"/> 系统公告</a></li>
+            		<li><a href="javascript:void(0)" class="nav-menu-item"><img src="img/18.png" height="20px" /> 锁屏</a></li>
+            		<li>
+            			<a href="" class="dropdown dropdown-toggle nav-dropdown-toggle" data-toggle="dropdown">
+            				<img src="${rc.contextPath}/img/avaters/${user.avater}" height="20px" class="img img-circle" /> ${user.nickname} <span class="caret"></span>
+            			</a>
+            			<ul class="dropdown-menu nav-dropdown-menu">
+            				<li class="dropdown-menu-item nav-dropdown-menu-item"><a href="" style="color: #fff;"><img src="img/48323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;&nbsp;&nbsp;个人资料 </a></li>
+            				<li class="dropdown-menu-item nav-dropdown-menu-item"><a href="" style="color: #fff;"><img src="img/65323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;&nbsp;&nbsp;修改密码 </a></li>
+            				<li class="dropdown-menu-item nav-dropdown-menu-item"><a href="" style="color: #fff;"><img src="img/64323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;&nbsp;&nbsp;更换皮肤 </a></li>
+            				<li class="dropdown-menu-item nav-dropdown-menu-item"><a href="${rc.contextPath}/user/logout" style="color: #fff;"><img src="img/62323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;&nbsp;&nbsp;安全退出 </a></li>
+            			</ul>
+            		</li>
+            	</ul>
+            </div>
+        </nav>
+        <div style="height: 55px;"></div>
+        <!--
+        	作者：titushan2010@163.com
+        	时间：2017-09-22
+        	描述：正文
+        -->
+	    <div id="panel-left" class="left hidden-xs"></div>
+	    
+	    <!--
+        	作者：titushan2010@163.com
+        	时间：2017-09-22
+        	描述：左侧滑动面板
+        -->
+	    <div id="panel-left-top" class="hidden-xs" align="center">
+	      	
+	      	<img id="face" src="${rc.contextPath}/img/avaters/${user.avater}" class="img img-circle img-responsive img-thumbnail img-face" width="100px" style="margin-top: 20px;"/>
+	      	
+	      	<div style="margin-top: 10px; color: #ccc;">
+	      	    <img src="img/j15.png" id="face-switch" height="25px" class="img img-circle hand switch-on" style="opacity: 0.7;"/>&nbsp;&nbsp;${user.nickname}
+	      	</div>
+	      	
+	      	<ul class="list-group" style="margin-top: 20px;">
+	      		<li class="list-group-item list-group-item-slider hand nopadding nomargin noborder"><a href="javascript:void(0)" id="admin_home.html" target="iframe-index" class="full-link list-group-item-url list-group-item-link list-group-item-link-active"><img src="img/57323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;后台首页</a></li>
+	      		
+	      		<#list user.menus as menu>
+	      		<#if menu.pid=null>
+	      		<li class="list-group-item list-group-item-slider  hand nopadding nomargin noborder"><a href="javascript:void(0)" class="full-link list-group-item-link list-group-item-link-parent"><img src="img/57323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;${menu.menuName} <img src="img/j14.png" height="20px" class="img  img-circle img-arrow" style="position: absolute; right: 10px; top: 10px; opacity: 0.7;"/></a></li>
+	      		<ul class="list-group nomargin nopadding noborder" style="display: none;">
+	      			<#list user.menus as menu2>
+	      			<#if menu2.pid=menu.menuId>
+	      				<li class="list-group-item list-group-item-slider hand nopadding nomargin noborder"><a href="javascript:void(0)" id="${menu2.menuUrl}" target="iframe-index" class="full-link list-group-item-link-small list-group-item-url"><img src="img/48323.png" height="20px" class="img img-circle"/>&nbsp;&nbsp;${menu2.menuName}</a></li>
+	      			</#if>
+	      			</#list>
+	      		</ul>
+	      		</#if>
+	      		</#list>
+	      		
+	      		
+	      	</ul>
+	      	
+	    </div>
+	     
+	     <!--
+         	作者：titushan2010@163.com
+         	时间：2017-09-22
+         	描述：滑块开关
+         -->
+	     
+	     <img src="img/rrow.png" id="slide-switch-1" class="img img-circle hand switch-on hidden-xs" height="40px" style="position: fixed; left: 5px; top: 56px; opacity: 0.7; z-index: 99;" />
+	     <img src="img/right.png" id="slide-switch-2" class="img img-circle hand switch-off hidden-lg hidden-md hidden-sm" height="40px" style="position: fixed; left: 5px; top: 56px; opacity: 0.5; z-index: 99;" />
+	     <!--
+        	作者：titushan2010@163.com
+        	时间：2017-09-22
+        	描述：右侧面板
+        -->
+	    <div id="panel-right" >
+	      		<div id="panel-right-nav">
+	      			<div class="left" id="panel-right-nav-head">
+	      				
+		      			
+			      		<div id='admin_home.html' class='left cap-title cap-title-active hand' align='center'>
+			      			<img src='img/57323.png' height='20px' class='img img-circle hand'/> 后台首页
+			      		</div>
+			      		
+		      			<!--
+		      			<div id='admin_home.html' class='left cap-title hand' align='center'><img src='img/57323.png' height='20px' class='img img-circle hand'/> 后台首页 &nbsp;&nbsp;<div class='div-close float-right' >×</div></div>
+		      			-->
+		      			
+	      			</div>
+	      			
+	      			<div id="page-option" align="center" class="hand">
+	      				<a href="javascript:void(0)" class="dropdown-toggle" id="dropdown-page-option" data-toggle="dropdown">
+	      				<img src="img/eject.png" height="20px" class="img img-circle" style="opacity: 0.7;"/>
+	      				页面操作
+	      				<span class="caret"></span>
+	      				</a>
+	      				
+	      				<ul class="dropdown-menu nav-dropdown-menu" style="width: 120px;">
+	      					<li class="dropdown-menu-item dropdown-menu-item-page-option"><a href="javascript:void(0)" id="page-option-1"><img src="img/repeat.png" height="20px" class="img img-circle" style="opacity: 0.7;"/> 刷新当前 </a></li>
+	      					<li class="dropdown-menu-item dropdown-menu-item-page-option"><a href="javascript:void(0)" id="page-option-2"><img src="img/eject.png" height="20px" class="img img-circle" style="opacity: 0.7;"/> 关闭其他 </a></li>
+	      					<li class="dropdown-menu-item dropdown-menu-item-page-option"><a href="javascript:void(0)" id="page-option-3"><img src="img/delete.png" height="20px" class="img img-circle" style="opacity: 0.7;"/> 关闭全部 </a></li>
+	      					<li class="dropdown-menu-item dropdown-menu-item-page-option"><a href="javascript:void(0)" id="page-option-4"><img src="img/stop.png" height="20px" class="img img-circle" style="opacity: 0.7;"/> 取消操作 </a></li>
+	      				</ul>
+	      				
+	      			</div>
+	      			
+	      			<div class="clear"></div>
+	      			
+	      		</div>
+	      		
+	      		<iframe src="${rc.contextPath}/home" class="iframe-index" name="iframe-index" ></iframe>
+	    		
+	    		
+	    </div>
+      	
+	</body>
+</html>

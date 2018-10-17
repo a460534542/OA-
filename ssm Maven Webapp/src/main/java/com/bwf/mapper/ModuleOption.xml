@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.ModuleOptionMapper">
+
+	<resultMap type="com.bwf.entity.ModuleOption" id="moduleOption">
+		<id column="module_option_id" property="moduleOptionId"/>
+		<result column="affair_module_id" property="affairModuleId"/>
+		<result column="option_id" property="optionId"/>
+		<result column="order" property="order"/>
+		<result column="option_name" property="optionName"/>
+		<result column="option_data" property="optionData"/>
+	</resultMap>
+	
+	
+	<insert id="add">
+		insert into module_option values
+		<foreach collection="moduleOptions" item="moduleOption" separator="," close=";">
+			( null , #{moduleOption.affairModuleId} , #{moduleOption.optionId} ,
+				#{moduleOption.order} , #{moduleOption.optionName} , #{moduleOption.optionData}
+			) 
+		</foreach>
+	</insert>
+	
+	<select id="getModuleOptionsByAffairModuleId" parameterType="int" resultMap="moduleOption">
+		select * from module_option where affair_module_id = #{id}
+	</select>
+	
+
+
+</mapper>

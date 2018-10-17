@@ -1,0 +1,71 @@
+
+body,div,img{margin: 0px; padding: 0px; border: 0px;}
+
+a{color: inherit; text-decoration: none;}
+a:hover{text-decoration: none; color: inherit;}
+.hand{cursor: pointer;}
+.dropdown-menu-item{padding: 4px 10px 4px 10px;}
+.product-price1{font-size: 18px; font-weight: 600; color: #ff5600; font-family: "微软雅黑";}
+.product-price2{font-size: 14px; font-weight: 400; color: #666; text-decoration: line-through;}
+.dropdown-menu-item{cursor: pointer; border-bottom: 1px solid #eee;}
+.navbar-div-label{ text-align: center; 
+background-color: #4d9546; }
+.list-group-link{color:#4d9546;}
+.list-group-link-active{ background-color:#4d9546 ; color: #eee; }
+.arrow-up {
+	display: inline-block;
+	width: 0;
+	height: 0;
+	margin-left: 2px;
+	vertical-align: middle;
+	border-bottom: 4px solid;
+	border-right: 4px solid transparent;
+	border-left: 4px solid transparent;
+}
+a:active{text-decoration: none;}
+a:visited{text-decoration: none;}
+
+.navbar .navbar-header .navbar-brand{color: #ccc; font-weight: 600;}
+.navbar-default{background-color: #23262E; color: white;}
+.navbar .navbar-text{color:#ccc;}
+.nav-item{margin: 10px 20px 0px 20px;}
+.btn-darkgreen{background-color: #1AA094; color: #fff;}
+.noborder{border: 0px;}
+.navbar .navbar-nav li a{color: #ccc;}
+.navbar .navbar-nav li a:hover{color:#ccc;}
+.navbar .navbar-nav li a:active{color:#ccc; background-color: #23262E;}
+.navbar .navbar-nav li{#ccc;}
+.nav-dropdown-menu{ background-color: #1AA094; color: #ccc; padding: 0px; margin: 0px; }
+.nav-dropdown-menu-item{margin: 0px; padding: 10px 0px 10px 0px;}
+.nav-dropdown-menu-item a{display: block; margin: 0px; padding: 0px; height: 100%;}
+.left{float: left;}
+.clear{width:0px; height: 0px; clear: both;}
+#panel-left{width:200px; background-color: #393D49; height: 100%; overflow: hidden; position: relative; left: 0px; top:55px;}
+#panel-right{ background-color: white; height: 100%; overflow: hidden; padding: 0px; border-width: 5px 0px 0px 2px; border-color:#1AA094; border-style: solid;}
+.navbar,.navbar-default{border: 0px;}
+#panel-left-top{ width: 200px; background-color: #393D49; height: 100%; overflow: hidden; position: fixed; left: 0px; top:55px; z-index: 90; }
+.img-face{border: 5px solid #44576b; padding: 0px; background-color: #44576b;}
+.full-link{display: block; margin: 0px; padding: 0px; height: 100%; background-color: red;}
+.nopadding{padding: 0px;}
+.nomargin{margin: 0px;}
+.list-group-item-link{ height: 40px; border-left:8px solid #393D49; background-color: #393D49; color: #eee; line-height: 40px;padding-left: 12px; text-align: left; font-size: 14px;}
+.list-group-item-link-active{ height: 40px; border-left:8px solid #1AA094; background-color: #1AA094; color: #eee; line-height: 40px;padding-left: 12px; text-align: left;}
+.list-group-item-link-small{ height: 40px; border-left:8px solid #393D49; background-color: #393D49; color: #eee; line-height: 40px;padding-left: 24px; text-align: left; font-size: 14px; }
+#panel-right-nav{  margin: 0px; border: 0px; padding: 0px; background-color: white; height: 40px;  width: 100%; overflow: hidden; position: relative; border-bottom: 1px solid #ccc;}
+.cap-title{height: 40px; line-height: 40px; font-size: 14px; font-weight: 600; background-color: #eee; color: #333; padding: 0px 10px;}
+.cap-title-active{background-color: #1AA094; color: #eee;}
+.float-right{float:right;}
+.div-close{width: 20px; height: 20px; background-color: transparent; line-height: 20px; margin-top: 10px;}
+.btn-gray{background-color: #e0e0e0; color: #666;}
+.col-condense{margin: 5px 0px 10px 0px;}
+
+.form-btn-group{margin: 0px 0px 5px 0px;}
+.btn-back{border-radius: 20px 10px 10px 20px; -moz-border-radius: 20px 10px 10px 20px;}
+.panel-tab{padding: 0px; background-color: transparent; border: 0px;}
+.panel-tab-head{padding: 0px; background-color: transparent; border: 0px;}
+.panel-tab-body{border: 1px solid #eee;}
+.panel-tab-footer{ background-color: transparent; border: 1px solid #eee;}
+.btn-step{border-radius: 10px 40px 10px 10px; position: relative; padding-left:50px ; padding-right: 30px;}
+thead tr th{text-align: center; font-size: 12px;}
+tbody tr td{font-size: 12px;}
+.td-checkbox{padding: 0px;}

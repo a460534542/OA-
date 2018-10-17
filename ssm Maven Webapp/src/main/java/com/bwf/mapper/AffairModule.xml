@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.AffairModuleMapper">
+
+	<resultMap type="com.bwf.entity.AffairModule" id="affairModule">
+		<id column="affair_module_id" property="affairModuleId"/>
+		<result column="affair_module_name" property="affairModuleName"/>
+		<result column="affair_module_producer_id" property="affairModuleProducerId"/>
+	</resultMap>
+	
+	
+	<insert id="add" parameterType="com.bwf.entity.AffairModule" useGeneratedKeys="true" keyProperty="affairModuleId">
+		insert into affair_module values (  
+			null , #{affairModuleName} , #{affairModuleProducerId} 
+		)
+	</insert>
+
+	<select id="getAll" resultMap="affairModule">
+		select * from affair_module;
+	</select>
+
+</mapper>

@@ -1,0 +1,8 @@
+html,body{width: 100%; height: 100%; overflow: hidden;}
+body{background-color: #23262E;}
+.iframe-index{border: 0px; padding: 10px; margin: 0px;  overflow: scroll; width: 100%; height: 100%; position: relative; z-index: 10;}
+#page-option{ border: 1px solid #ccc; padding: 0px; margin: 0px; height: 40px; width: 120px; background-color: #eee; position: fixed; right: 0px; top: 60px;  z-index: 999; line-height: 40px; font-size: 14px; font-weight: 600; color: #666; }
+
+.dropdown-menu-item-page-option{margin: 0px; padding: 10px 0px 10px 0px; background-color: #eee; color: #666;}
+.dropdown-menu-item-page-option a{display: block; margin: 0px; padding: 0px; height: 100%;}
+
