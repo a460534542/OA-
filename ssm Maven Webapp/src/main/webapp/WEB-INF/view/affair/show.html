@@ -11,6 +11,14 @@
 		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
 		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
 		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+		<script type="text/javascript">
+			$(function(){
+				$('.check').click(function(){
+					location.href="${rc.contextPath}/affair/detail/"+$(this).val();
+				})
+			})
+		</script>
+		
 	</head>
 	<body>
 		
@@ -40,7 +48,43 @@
 						</div>
 						
 						<div class="panel-body panel-tab-body">
-							第一页
+							<hr/>
+							<table class="table table-bordered table-condensed table-hover table-responsive cbx-group">
+								<thead>
+									<tr>
+										<th class="td-checkbox"><input type="checkbox" class="cbx-all"/></th>
+										<th>公文编号</th>
+										<th>公文类型</th>
+										<th>发起人</th>
+										<th>公文状态</th>					
+										<th>操作选项</th>
+									</tr>
+								</thead>
+								<tbody>
+									<#list affairByMe as affair1>
+										<tr align="center">
+												<td align="center" class="td-checkbox"><input type="checkbox" name="id"/></td>
+												<td>${affair1.affairId}</td>
+												<td>${affair1.affairModule.affairModuleName}</td>
+												<td>${affair1.proposer.nickname}</td>
+												<td>
+													<#if affair1.affairStatus=0>
+														<span class="label label-default">审批中</span>
+													<#elseif affair1.affairStatus=1>
+														<span class="label label-success">审批通过</span>
+													<#elseif affair1.affairStatus=2>
+														<span class="label label-danger">审批驳回</span>		
+													</#if>
+												</td>
+												<td width="120px">
+													<span class="btn-group btn-group-xs" >
+														<button type="button" class="btn btn-default check" value="${affair1.affairId}">查看</button>
+													</span>
+												</td>
+										</tr>
+									</#list>
+								</tbody>		
+							</table>
 						</div>						
 						
 						<div class="panel-body panel-tab-body">

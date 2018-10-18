@@ -1,0 +1,106 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>BWFUIFramework</title>
+		<link rel="stylesheet" href="${rc.contextPath}/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="${rc.contextPath}/css/animate.min.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/jquery.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/bootstrap.min.js" ></script>
+		<script type="text/javascript" src="${rc.contextPath}/js/wow.js" ></script>
+		<link rel="stylesheet" href="${rc.contextPath}/css/global.css" />
+		<script type="text/javascript" src="${rc.contextPath}/js/global.js" ></script>
+	</head>
+	<body>	
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<button onclick="history.back()" type="button" class="btn btn-default btn-back btn-sm"> 返 回 </button>&nbsp;&nbsp;
+					公文详情
+				</div>	
+				<div class="panel-body">						
+						<table class="table table-bordered table-condensed table-hover table-responsive cbx-group">
+							<!-- <thead>
+								<tr>
+								<th class="td-checkbox"><input type="checkbox" class="cbx-all"/></th>
+								<th>表格标题</th>
+								<th>表格标题</th>
+								</tr>
+							</thead> -->
+							<tbody>
+								<tr>									
+									<td>公文编号</td>
+									<td>${affair.affairId}</td>									
+								</tr>
+								<tr>									
+									<td>公文类型</td>
+									<td>${affair.affairModule.affairModuleName}</td>									
+								</tr>
+								<tr>									
+									<td>申请人</td>
+									<td>${affair.proposer.nickname}</td>									
+								</tr>
+								<tr>									
+									<td>公文详情</td>
+									<td>
+										<form class="form-horizontal" role="form" disabled="disabled">
+											${affair.affairData}
+										</form>
+									</td>									
+								</tr>
+								<tr>									
+									<td>审批流程</td>
+									<td>
+										<table class="table table-bordered">
+											<tr>
+												<th>审批顺序</th>
+												<th>审批人</th>
+												<th>批言</th>
+												<th>审批结果</th>
+											</tr>
+											<#list affair.affairChains as chain>
+											<tr>
+												<td>${chain.affairChainOrder}</td>
+												<td>${chain.approver.nickname}</td>
+												<td>${chain.affairChainComment}</td>
+												<td>
+													<#if chain.affairChainStatus=0>
+														<span class="label label-default">尚未流转到</span>
+													<#elseif chain.affairChainStatus=1>
+														<span class="label label-primary">待审批</span>
+													<#elseif chain.affairChainStatus=2>
+														<span class="label label-success">审批通过</span>
+													<#else>
+														<span class="label label-danger">审批驳回</span>		
+													</#if>
+												</td>
+											</tr>
+											</#list>
+										</table>
+									</td>									
+								</tr>
+								
+								<tr>									
+									<td>公文状态</td>
+									<td>
+										<#if affair.affairStatus=0>
+											<span class="label label-default">审批中</span>
+										<#elseif affair.affairStatus=1>
+											<span class="label label-success">审批通过</span>
+										<#elseif affair.affairStatus=2>
+											<span class="label label-danger">审批驳回</span>		
+										</#if>
+									</td>									
+								</tr>
+								
+							</tbody>
+							<tfoot>
+								
+							</tfoot>
+						</table>	
+				</div>
+			</div>
+		<div style="height: 80px;"></div>
+	</body>
+</html>
+

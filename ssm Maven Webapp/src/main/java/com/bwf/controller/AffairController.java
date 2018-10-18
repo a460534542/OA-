@@ -3,12 +3,14 @@ package com.bwf.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 
 import org.omg.CORBA.PUBLIC_MEMBER;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -31,10 +33,12 @@ public class AffairController {
 	com.bwf.service.IAffairService affairService;
 
 	@GetMapping("show")
-	public String show(ModelMap modelMap){
+	public String show(HttpSession session,ModelMap modelMap){
 		List<AffairModule>allAffairModules=affairModuleService.getAll();
 		modelMap.addAttribute("allAffairModules", allAffairModules);
-		
+		User current=(User)session.getAttribute("user");
+		List<Affair>affairByMe=affairService.getAffairByMe(current);
+		modelMap.addAttribute("affairByMe", affairByMe);
 		return "affair/show";
 	}
 	
@@ -56,9 +60,18 @@ public class AffairController {
 		affair.setAffairData(html);
 		affair.setProposer(  (User)session.getAttribute("user") );
 		affair.setAffairStatus(0);
-		
-		
 		affairService.add( affair );
 		return "redirect:/affair/show";
 	}
+	
+	@GetMapping("detail/{id}")
+	public String detail(@PathVariable Integer id,ModelMap modelMap){
+	
+		Affair affair=affairService.getAffairDetailByAffairId(id);
+		System.out.println(affair.getAffairChains().get(0).getApprover().getNickname());
+		modelMap.addAttribute("affair", affair);
+		return "affair/detail";
+	}
+	
+	
 }

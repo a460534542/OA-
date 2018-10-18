@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 对应 dao 中的 接口 -->
+<mapper namespace="com.bwf.dao.AffairChainMapper">
+
+	<resultMap type="com.bwf.entity.AffairChain" id="affairChain">
+		<id column="affair_chain_id" property="affairChainId"/>				
+		<result column="affair_id" property="affairId"/>	
+		<result column="affair_chain_order" property="affairChainOrder"/> 
+		<result column="affair_chain_status" property="affairChainStatus"/>
+		<result column="affair_chain_comment" property="affairChainComment"/>
+		<association  column="approver"  
+					property="approver" 
+					javaType="com.bwf.entity.User"
+					select="com.bwf.dao.UserMapper.getUserById"
+					>
+		</association>
+	</resultMap>
+	
+	<insert id="add" >
+		insert into affair_chain values 
+		<foreach collection="affairChains"   separator="," item="affairChain">
+			( null , #{affairChain.affairId} , #{affairChain.affairChainOrder} ,
+			#{affairChain.affairChainStatus} , null , #{affairChain.approver} )
+		</foreach>
+	</insert>
+	
+	<update id="propose" parameterType="com.bwf.entity.AffairChain">
+		update affair_chain set 
+			affair_chain_status = #{affairChainStatus} ,
+			affair_chain_comment = #{affairChainComment} 
+		where affair_chain_id = #{affairChainId}		
+	</update>
+	
+	<select id="getNext" parameterType="com.bwf.entity.AffairChain" resultMap="affairChain">
+		select * from affair_chain 
+		where affair_id = #{affairId} and affair_chain_order = ${affairChainOrder}
+	</select>
+	
+	<update id="setNextStatus" parameterType="com.bwf.entity.AffairChain">
+		update affair_chain set affair_chain_status = 1
+		where affair_chain_id = ${affairChainId}
+	</update>
+	
+	<select id="getAffairChainByAffairChainId" parameterType="int" resultMap="affairChain">
+		select * from affair_chain where affair_chain_id = #{id}
+	</select>
+
+</mapper>

@@ -15,8 +15,45 @@
 			$(function(){
 				$('#btnSubmit').click(function(){
 					$('#affairModuleId').val(${affairModuleId});
+					 $('#formAffair1').find( 'input' ).each( function(i,e){
+						var val = $(e).val();
+					
+						if(  $(e).attr("type") == "checkbox" || $(e).attr("type") == "radio" ) {
+							if ( $(e).prop('checked') ) {
+								$(e).attr('checked' , 'checked');	
+								$(e).attr('disabled' , 'disabled');							
+							}
+						} else {
+							if ( val.trim() != '' ) {
+								var clone = $(e).clone();
+								clone.attr('value' , $(e).val());															
+								$(e).after( clone ).remove();	
+								clone.attr('disabled' , 'disabled');
+							}
+						}
+						
+					} );
+					
+					$('#formAffair1').find('textarea').each( function(i,e){
+						var clone = $(e).clone();
+						clone.html ( $(e).val() );						
+						$(e).after( clone ).remove();
+						clone.attr('disabled' , 'disabled');						
+					} );
+					
+					$('#formAffair1').find('select').each( function(i,e){
+						$(e).find('option').each( function(i1,e1) {
+							if( $(e1).prop('selected') ) {
+								$(e1).attr('selected' , 'selected');								
+							}
+						});
+						$(e).attr('disabled' , 'disabled');		
+					});
+					
 					$('#html').val($('#formAffair1').html());
 					 $('#formAffair2').submit();
+					 
+					 
 				});
 			
 					
@@ -32,10 +69,12 @@
 				</div>
 				
 				<div class="panel-body">
-						<div style="display:none;"><form action="${rc.contextPath}/affair/doAdd" method="post" id="formAffair2">
-								<input id="affairModuleId" name="affairModuleId" type="text"/>
-								<input id="html" name="html" type="text"/>
-						</form></div> 
+						<div style="display:none;">
+							<form action="${rc.contextPath}/affair/doAdd" method="post" id="formAffair2">
+									<input id="affairModuleId" name="affairModuleId" type="text"/>
+									<input id="html" name="html" type="text"/>
+							</form>
+						</div> 
 					<!-- 新增公文 -->
 					<form action="${rc.contextPath}/affair/doAdd" method="post" id="formAffair1" class="form-horizontal" role="form">
 					

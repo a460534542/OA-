@@ -1,5 +1,7 @@
 package com.bwf.entity;
 
+import java.util.List;
+
 public class Affair {
 	
 	private Integer affairId;
@@ -12,6 +14,16 @@ public class Affair {
 	
 	//0 未完成 , 1 已完成  , 2已驳回
 	private Integer affairStatus;
+	
+	private List<AffairChain> affairChains;
+
+	public List<AffairChain> getAffairChains() {
+		return affairChains;
+	}
+
+	public void setAffairChains(List<AffairChain> affairChains) {
+		this.affairChains = affairChains;
+	}
 
 	public Integer getAffairStatus() {
 		return affairStatus;

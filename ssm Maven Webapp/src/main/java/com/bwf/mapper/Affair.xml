@@ -17,6 +17,11 @@
 		<association property="proposer" javaType="com.bwf.entity.User"
 			column="proposer" resultMap="com.bwf.dao.UserMapper.simpleUser">
 		</association>
+		<collection property="affairChains" ofType="com.bwf.entity.AffairChain"
+		resultMap="com.bwf.dao.AffairChainMapper.affairChain"
+		>
+		</collection>
+		
 	</resultMap>
 	
 	<insert id="add" parameterType="com.bwf.entity.Affair">
@@ -28,7 +33,23 @@
 			#{affairStatus}
 		)
 	</insert>
+	<!-- 我发起的公文  -->
+	<select id="getAffairByMe" parameterType="com.bwf.entity.User" resultMap="affair">
+		select affair.* , affair_module.affair_module_name , user.nickname 
+		from affair 
+		inner join affair_module on affair.affair_module_id = affair_module.affair_module_id
+		inner join user on affair.proposer = user.user_id
+		where user.user_id = #{userId};
+	</select>
 	
-
+	<select id="getAffairDetailByAffairId" parameterType="int" resultMap="affair">
+		select affair.* , affair_module.affair_module_name , faqiren.nickname , affair_chain.* , shenpiren.nickname as nickname1  
+		from affair 
+		inner join affair_module on affair.affair_module_id = affair_module.affair_module_id
+		inner join user faqiren on affair.proposer = faqiren.user_id
+		inner join affair_chain on affair.affair_id = affair_chain.affair_id
+		inner join user shenpiren on  shenpiren.user_id = affair_chain.approver
+		where affair.affair_id = #{id};
+	</select>
 
 </mapper>
