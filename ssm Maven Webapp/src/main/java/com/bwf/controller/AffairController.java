@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.bwf.entity.Affair;
+import com.bwf.entity.AffairChain;
 import com.bwf.entity.AffairModule;
 import com.bwf.entity.User;
 import com.bwf.service.IAffairModuleService;
@@ -31,6 +32,9 @@ public class AffairController {
 
 	@Autowired
 	com.bwf.service.IAffairService affairService;
+	
+	@Autowired
+	com.bwf.service.IAffairChainService affairChainService;
 
 	@GetMapping("show")
 	public String show(HttpSession session,ModelMap modelMap){
@@ -83,6 +87,14 @@ public class AffairController {
 		modelMap.addAttribute("affair", affair);
 		return "affair/propose";
 	}
-	
-	
+	@PostMapping("doPropose")
+	public String dopropose(AffairChain affairChain,String propose){
+		if(propose.equals("同意")){
+			affairChain.setAffairChainStatus(2);
+		}else{
+			affairChain.setAffairChainStatus(3);
+		}
+		affairChainService.propose(affairChain);
+		return "redirect:/affair/show";
+	}
 }

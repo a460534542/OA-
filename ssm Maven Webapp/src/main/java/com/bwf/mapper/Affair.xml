@@ -59,5 +59,10 @@
 		inner join affair_chain on affair.affair_id = affair_chain.affair_id
 		where affair_chain.affair_chain_status = 1 and affair_chain.approver = #{userId};
 	</select>
+	
+	<update id="setStatus" parameterType="com.bwf.entity.Affair" >
+		update affair set affair_status=#{affairStatus} 
+		where affair_id=#{affairId}
+	</update>
 
 </mapper>
