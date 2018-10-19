@@ -16,6 +16,9 @@
 				$('.check').click(function(){
 					location.href="${rc.contextPath}/affair/detail/"+$(this).val();
 				})
+				$('.shenPi').click(function(){
+					location.href='${rc.contextPath}/affair/propose/'+$(this).val();
+				})
 			})
 		</script>
 		
@@ -34,7 +37,7 @@
 						<div class="panel-heading panel-tab-head" style="background-color: transparent; ">
 							<div class="btn-group col-md-6" data-toggle="buttons">
 								<label type="button" class="btn btn-primary active btn-tab"><input type="radio"/>发起的公文</label>
-								<label type="button" class="btn btn-primary btn-tab"><input type="radio"/>待审批的公文</label>
+								<label type="button" class="btn btn-primary btn-tab"><input id="waitShenPi" type="radio"/>待审批的公文</label>
 							</div>
 							
 							<div class="col-md-6 text-right">
@@ -46,7 +49,7 @@
 								</select>
 							</div>
 						</div>
-						
+						<!--  我发起的公文  -->
 						<div class="panel-body panel-tab-body">
 							<hr/>
 							<table class="table table-bordered table-condensed table-hover table-responsive cbx-group">
@@ -86,9 +89,45 @@
 								</tbody>		
 							</table>
 						</div>						
-						
+						<!-- 待审批的的公文  -->
 						<div class="panel-body panel-tab-body">
-							第二页
+							<hr/>
+							<table class="table table-bordered table-condensed table-hover table-responsive cbx-group">
+								<thead>
+									<tr>
+										<th class="td-checkbox"><input type="checkbox" class="cbx-all"/></th>
+										<th>公文编号</th>
+										<th>公文类型</th>
+										<th>发起人</th>
+										<th>公文状态</th>					
+										<th>操作选项</th>
+									</tr>
+								</thead>
+								<tbody>
+									<#list affairToBePropose as affair2>
+										<tr align="center">
+												<td align="center" class="td-checkbox"><input type="checkbox" name="id"/></td>
+												<td>${affair2.affairId}</td>
+												<td>${affair2.affairModule.affairModuleName}</td>
+												<td>${affair2.proposer.nickname}</td>
+												<td>
+													<#if affair2.affairStatus=0>
+														<span class="label label-default">审批中</span>
+													<#elseif affair2.affairStatus=1>
+														<span class="label label-success">审批通过</span>
+													<#elseif affair2.affairStatus=2>
+														<span class="label label-danger">审批驳回</span>		
+													</#if>
+												</td>
+												<td width="120px">
+													<span class="btn-group btn-group-xs" >
+															<button  type="button" class="btn btn-primary shenPi" value="${affair2.affairId}">审批</button>
+													</span>
+												</td>
+										</tr>
+									</#list>
+								</tbody>		
+							</table>
 						</div>
 						
 						<div class="panel-footer panel-tab-footer">

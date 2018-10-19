@@ -15,4 +15,6 @@ public interface AffairMapper {
 
 	void setStatus(Affair affair);
 
+	List<Affair> getAffairToBePropose(User current);
+
 }

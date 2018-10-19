@@ -51,5 +51,13 @@
 		inner join user shenpiren on  shenpiren.user_id = affair_chain.approver
 		where affair.affair_id = #{id};
 	</select>
+	
+	<select id="getAffairToBePropose" parameterType="com.bwf.entity.User" resultMap="affair">
+		select affair.* , affair_module.affair_module_name , user.nickname from affair 
+		inner join affair_module on affair.affair_module_id = affair_module.affair_module_id
+		inner join user on affair.proposer = user.user_id
+		inner join affair_chain on affair.affair_id = affair_chain.affair_id
+		where affair_chain.affair_chain_status = 1 and affair_chain.approver = #{userId};
+	</select>
 
 </mapper>

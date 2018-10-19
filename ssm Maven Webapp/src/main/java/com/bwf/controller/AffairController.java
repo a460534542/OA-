@@ -37,8 +37,12 @@ public class AffairController {
 		List<AffairModule>allAffairModules=affairModuleService.getAll();
 		modelMap.addAttribute("allAffairModules", allAffairModules);
 		User current=(User)session.getAttribute("user");
+		//我发起的
 		List<Affair>affairByMe=affairService.getAffairByMe(current);
 		modelMap.addAttribute("affairByMe", affairByMe);
+		//我审批的
+		List<Affair>affairToBePropose=affairService.getAffairToBePropose(current);
+		modelMap.addAttribute("affairToBePropose", affairToBePropose);
 		return "affair/show";
 	}
 	
@@ -71,6 +75,13 @@ public class AffairController {
 		System.out.println(affair.getAffairChains().get(0).getApprover().getNickname());
 		modelMap.addAttribute("affair", affair);
 		return "affair/detail";
+	}
+	@GetMapping("propose/{id}")
+	public String propose(@PathVariable Integer id,ModelMap modelMap){
+		Affair affair=affairService.getAffairDetailByAffairId(id);
+		System.out.println(affair.getAffairChains().get(0).getApprover().getNickname());
+		modelMap.addAttribute("affair", affair);
+		return "affair/propose";
 	}
 	
 	

@@ -33,4 +33,10 @@ public class AffairServiceImpl implements IAffairService {
 		return affairMapper.getAffairDetailByAffairId(id);
 	}
 
+	@Override
+	public List<Affair> getAffairToBePropose(User current) {
+		// TODO Auto-generated method stub
+		return affairMapper.getAffairToBePropose(current);
+	}
+
 }
